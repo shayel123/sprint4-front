@@ -63,18 +63,18 @@ export async function addPost(post) {
     }
 }
 
-export function updatePost(post) {
-    return postService.save(post)
-        .then(savedPost => {
-            console.log('Updated post :', savedPost)
-            store.dispatch(getActionUpdatePost(savedPost))
-            return savedPost
-        })
-        .catch(err => {
-            console.log('Cannot save post', err)
-            throw err
-        })
+export async function updatePost(post) {
+    try {
+        const savedPost = await postService.save(post);
+        console.log('Updated post:', savedPost);
+        store.dispatch(getActionUpdatePost(savedPost));
+        return savedPost;
+    } catch (err) {
+        console.error('An error occurred:', err);
+        throw err;
+    }
 }
+
 
 // export function addToCart(car) {
 //     store.dispatch({
