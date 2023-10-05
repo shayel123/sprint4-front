@@ -52,6 +52,7 @@ export async function removePost(postId) {
 }
 
 export async function addPost(post) {
+    
     console.log(post)
     try {
         const savedPost = await postService.save(post)

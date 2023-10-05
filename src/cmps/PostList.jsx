@@ -6,7 +6,6 @@ import saveSvg from '/src/assets/icons/save.svg'
 
 
 export function PostList({posts,onDeletePost}) {
-console.log(posts)
     return (
         <>
             {posts.map(post => <PostPreview onDeletePost={onDeletePost}  key={post._id} post={post} />)}
@@ -32,8 +31,8 @@ function PostPreviewHeader({ post,onDeletePost}) {
     return (
         <div className="post-preview-header">
             <div>
-                <img src={post.by.imgUrl} alt="profile" />
-                <strong className="userName-preview">{post.by.fullname}</strong>
+                <img src={post.by?.imgUrl} alt="profile" />
+                <strong className="userName-preview">{post.by?.fullname}</strong>
             </div>
 
             <img title='Delete post' onClick={()=>onDeletePost(post._id)} src={dotsSvg} alt="" />
@@ -66,7 +65,7 @@ function PostStats({post}){
     return (
         <>
         <p className="likes-stats">{post.likedBy?.length} likes</p>
-        <p className="name-stats"><strong className="name-color" > {post.by.fullname} </strong>{post.txt}</p>
+        <p className="name-stats"><strong className="name-color" > {post.by?.fullname} </strong>{post.txt}</p>
         {post.comments?<p className="comments-stats">View all {post.comments.length} comments</p>:null}
         </>
     )

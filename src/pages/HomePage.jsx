@@ -1,92 +1,4 @@
-// import { useEffect } from 'react'
-// import { useSelector } from 'react-redux'
-// import { loadCars, addCar, updateCar, removeCar, addToCart } from '../store/car.actions.js'
 
-// import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
-// import { userService } from '../services/user.service.js'
-// import { carService } from '../services/car.service.js'
-
-// export function CarIndex() {
-
-//     const cars = useSelector(storeState => storeState.carModule.cars)
-
-//     useEffect(() => {
-//         loadCars()
-//     }, [])
-
-//     async function onRemoveCar(carId) {
-//         try {
-//             await removeCar(carId)
-//             showSuccessMsg('Car removed')            
-//         } catch (err) {
-//             showErrorMsg('Cannot remove car')
-//         }
-//     }
-
-//     async function onAddCar() {
-//         const car = carService.getEmptyCar()
-//         car.vendor = prompt('Vendor?')
-//         try {
-//             const savedCar = await addCar(car)
-//             showSuccessMsg(`Car added (id: ${savedCar._id})`)
-//         } catch (err) {
-//             showErrorMsg('Cannot add car')
-//         }        
-//     }
-
-//     async function onUpdateCar(car) {
-//         const price = +prompt('New price?')
-//         const carToSave = { ...car, price }
-//         try {
-//             const savedCar = await updateCar(carToSave)
-//             showSuccessMsg(`Car updated, new price: ${savedCar.price}`)
-//         } catch (err) {
-//             showErrorMsg('Cannot update car')
-//         }        
-//     }
-
-//     function onAddToCart(car){
-//         console.log(`Adding ${car.vendor} to Cart`)
-//         addToCart(car)
-//         showSuccessMsg('Added to Cart')
-//     }
-
-//     function onAddCarMsg(car) {
-//         console.log(`TODO Adding msg to car`)
-//     }
-//     function shouldShowActionBtns(car) {
-//         const user = userService.getLoggedinUser()
-//         if (!user) return false
-//         if (user.isAdmin) return true
-//         return car.owner?._id === user._id
-//     }
-
-//     return (
-//         <div>
-//             <h3>Cars App</h3>
-//             <main>
-//                 <button onClick={onAddCar}>Add Car ⛐</button>
-//                 <ul className="car-list">
-//                     {cars.map(car =>
-//                         <li className="car-preview" key={car._id}>
-//                             <h4>{car.vendor}</h4>
-//                             <h1>⛐</h1>
-//                             <p>Price: <span>${car.price.toLocaleString()}</span></p>
-//                             <p>Owner: <span>{car.owner && car.owner.fullname}</span></p>
-//                             {shouldShowActionBtns(car) && <div>
-//                                 <button onClick={() => { onRemoveCar(car._id) }}>x</button>
-//                                 <button onClick={() => { onUpdateCar(car) }}>Edit</button>
-//                             </div>}
-
-//                             <button onClick={() => { onAddCarMsg(car) }}>Add car msg</button>
-//                             <button className="buy" onClick={() => { onAddToCart(car) }}>Add to cart</button>
-//                         </li>)
-//                     }
-//                 </ul>
-//             </main>
-//         </div>
-//     )
-// }
 import { Sidebar } from "../cmps/Sidebar"
 import { PostList } from "../cmps/postList"
 import { SuggestFollowers } from "../cmps/SuggestFollowers"
@@ -95,11 +7,15 @@ import { useSelector } from "react-redux"
 import { CreatePostModal } from "../cmps/CreatePostModal"
 import { addPost, loadPosts, removePost } from "../store/post.actions"
 import { utilService } from "../services/util.service"
+import { postService } from "../services/post.service.local"
+
+
 export function HomePage() {
     const posts = useSelector(storeState => storeState.postModule.posts)
     useEffect(() => {
         loadPosts()
     }, [])
+    const [postToEdit, setPostToEdit] = useState(postService.getEmptyPost())
     const [openCreate, setOpenCreate] = useState(false)
     function ToggleModal(ev) {
         ev.preventDefault()
@@ -108,42 +24,22 @@ export function HomePage() {
 
     async function onDeletePost(id) {
         try {
-           await removePost(id)
+            await removePost(id)
 
         } catch (error) {
             console.log(error)
         }
 
     }
-    async function onAddPost(file) {
+    async function onAddPost(txt, file) {
         try {
-            const newPost = {
-                imgUrl: file,
-                comments: [
-                    {
-                        id: 'c1001',
-                        by:
-                        {
-                            fullname: "Bob",
-                            imgUrl: "http://some-img"
-                        },
-                        txt: 'good one!'
-                    },
-                ],
-                by:
-                {
-                    fullname: "Shayel Moalem",
-                    imgUrl: "./src/assets/img/posts/post4.jpg"
-                },
-                txt: 'I love it'
-            }
-            await addPost(newPost)
-            setOpenCreate(state => !state)
-
+            setPostToEdit(state => ({ ...state, txt, imgUrl: file }))
         } catch (error) {
             console.log(error)
+        } finally {
+            addPost(postToEdit)
+            setOpenCreate(state => !state)
         }
-
     }
     return (
         <>

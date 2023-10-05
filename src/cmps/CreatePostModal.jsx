@@ -4,10 +4,11 @@ import { uploadService } from "../services/upload.service";
 import { systemReducer, LOADING_DONE, LOADING_START } from "../store/system.reducer";
 import { useDispatch, useSelector } from "react-redux";
 
-export function CreatePostModal({ onCloseModal,onAddPost }) {
+export function CreatePostModal({ onCloseModal, onAddPost }) {
     const dispath = useDispatch()
     const isLoading = useSelector(storeState => storeState.systemModule.isLoading)
     const [selectedFile, setSelectedFile] = useState(null);
+    
 
     async function handleAddPhoto(ev) {
         dispath({
@@ -36,13 +37,12 @@ export function CreatePostModal({ onCloseModal,onAddPost }) {
         )
     }
     if (selectedFile) {
-       
 
         return (
             <section className="modal">
                 <div >
                     <button onClick={() => setSelectedFile(null)} >another</button>
-                    <button onClick={() => onAddPost(selectedFile)}>Share</button>
+                    <button onClick={() => onAddPost('this shuld be input', selectedFile)}>Share</button>
 
                 </div>
                 <img style={{ width: '100%', objectFit: 'fill', height: '100%' }} src={selectedFile} alt="Uploaded" />
