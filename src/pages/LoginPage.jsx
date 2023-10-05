@@ -21,7 +21,7 @@ export function LoginPage() {
 
     return (
         <section className='login-container' >
-            <img className='image' src="src\assets\img\instagrom-logo-login.jpg" alt="" />
+            <img className='image' src="src\assets\img\instagram-logo-login.jpg" alt="" />
             <div className='login-data' >
                 <div >
                     <div>

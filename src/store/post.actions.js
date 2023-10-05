@@ -114,7 +114,7 @@ export async function updatePost(post) {
 
 //     carService.remove(carId)
 //         .then(() => {
-//             console.log('Server Reported - Deleted Succesfully');
+//             console.log('Server Reported - Deleted Successfully');
 //         })
 //         .catch(err => {
 //             showErrorMsg('Cannot remove car')

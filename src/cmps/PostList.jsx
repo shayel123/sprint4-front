@@ -17,7 +17,7 @@ function PostPreview({ post,onDeletePost }) {
     return (
         <article className="post-preview">
             <PostPreviewHeader onDeletePost={onDeletePost} post={post} />
-            <PostImage image={post.imgUrl} />
+            <PostImage img={post.imgUrl} />
             <PostActions />
             <PostStats post={post} />
             <InputComment />
@@ -39,11 +39,11 @@ function PostPreviewHeader({ post,onDeletePost}) {
         </div>
     )
 }
-function PostImage({ image }) {
-    console.log(image)
+function PostImage({ img }) {
+    console.log(img)
     return (
-        <div className="post-image-container">
-            <img className="post-image" src={image} alt="profile" />
+        <div className="post-img-container">
+            <img className="post-img" src={img} alt="profile" />
         </div>
     )
 }
