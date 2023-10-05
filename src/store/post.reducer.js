@@ -24,13 +24,13 @@ export function postReducer(state = initialState, action) {
             newState = { ...state, posts, lastRemovedPost }
             break
         case ADD_POST:
-            newState = { ...state, posts: [...state.posts, action.car] }
+            newState = { ...state, posts: [action.post, ...state.posts] }
             break
         case UPDATE_POST:
-            posts = state.posts.map(car => (car._id === action.car._id) ? action.car : car)
+            posts = state.posts.map(post => (post._id === action.post._id) ? action.post : post)
             newState = { ...state, posts }
             break
-        // case ADD_TO_CART:
+        // case ADD_TO_postT:
         //     newState = { ...state, cart: [...state.cart, action.car] }
         //     break
         // case REMOVE_FROM_CART:

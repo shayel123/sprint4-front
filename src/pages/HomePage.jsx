@@ -93,7 +93,8 @@ import { SuggestFollowers } from "../cmps/SuggestFollowers"
 import React, { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { CreatePostModal } from "../cmps/CreatePostModal"
-import { loadPosts, removePost } from "../store/post.actions"
+import { addPost, loadPosts, removePost } from "../store/post.actions"
+import { utilService } from "../services/util.service"
 export function HomePage() {
     const posts = useSelector(storeState => storeState.postModule.posts)
     useEffect(() => {
@@ -105,14 +106,48 @@ export function HomePage() {
         setOpenCreate(state => !state)
     }
 
-    function onDeletePost(id) {
-        // console.log(id)
-        removePost(id)
+    async function onDeletePost(id) {
+        try {
+           await removePost(id)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+    async function onAddPost(file) {
+        try {
+            const newPost = {
+                imgUrl: file,
+                comments: [
+                    {
+                        id: 'c1001',
+                        by:
+                        {
+                            fullname: "Bob",
+                            imgUrl: "http://some-img"
+                        },
+                        txt: 'good one!'
+                    },
+                ],
+                by:
+                {
+                    fullname: "Shayel Moalem",
+                    imgUrl: "./src/assets/img/posts/post4.jpg"
+                },
+                txt: 'I love it'
+            }
+            await addPost(newPost)
+            setOpenCreate(state => !state)
+
+        } catch (error) {
+            console.log(error)
+        }
 
     }
     return (
         <>
-            {openCreate ? <div className="create-modal"><CreatePostModal onCloseModal={ToggleModal} /></div> : null}
+            {openCreate ? <div className="create-modal"><CreatePostModal onAddPost={onAddPost} onCloseModal={ToggleModal} /></div> : null}
             <div className={`home-page-container `} >
                 <section className="side-bar">
                     <Sidebar onCreate={setOpenCreate} />
