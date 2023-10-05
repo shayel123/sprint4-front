@@ -90,16 +90,25 @@
 import { Sidebar } from "../cmps/Sidebar"
 import { PostList } from "../cmps/postList"
 import { SuggestFollowers } from "../cmps/SuggestFollowers"
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { CreatePostModal } from "../cmps/CreatePostModal"
+import { loadPosts, removePost } from "../store/post.actions"
 export function HomePage() {
     const posts = useSelector(storeState => storeState.postModule.posts)
-
+    useEffect(() => {
+        loadPosts()
+    }, [])
     const [openCreate, setOpenCreate] = useState(false)
     function ToggleModal(ev) {
         ev.preventDefault()
         setOpenCreate(state => !state)
+    }
+
+    function onDeletePost(id) {
+        // console.log(id)
+        removePost(id)
+
     }
     return (
         <>
@@ -109,7 +118,7 @@ export function HomePage() {
                     <Sidebar onCreate={setOpenCreate} />
                 </section>
                 <main className="post-list">
-                    <PostList posts={posts} />
+                    <PostList onDeletePost={onDeletePost} posts={posts} />
                 </main>
                 <section className="suggest-followers">
                     <SuggestFollowers />

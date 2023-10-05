@@ -1,30 +1,22 @@
-import { useEffect } from "react"
-import { postService } from "../services/post.service.local"
-import { useSelector } from "react-redux"
-import { loadPosts } from "../store/post.actions"
 import dotsSvg from '/src/assets/icons/dots.svg'
 import likeSvg from '/src/assets/icons/like.svg'
 import commentSvg from '/src/assets/icons/comment.svg'
 import sendSvg from '/src/assets/icons/share.svg'
 import saveSvg from '/src/assets/icons/save.svg'
-export function PostList({posts}) {
-    console.log('1', posts)
-    useEffect(() => {
-        loadPosts()
-    }, [])
 
 
+export function PostList({posts,onDeletePost}) {
     return (
         <>
-            {posts.map(post => <PostPreview key={post._id} post={post} />)}
+            {posts.map(post => <PostPreview onDeletePost={onDeletePost}  key={post._id} post={post} />)}
         </>
     )
 }
 
-function PostPreview({ post }) {
+function PostPreview({ post,onDeletePost }) {
     return (
         <article className="post-preview">
-            <PostPreviewHeader post={post} />
+            <PostPreviewHeader onDeletePost={onDeletePost} post={post} />
             <PostImage image={post.imgUrl} />
             <PostActions />
             <PostStats post={post} />
@@ -34,14 +26,16 @@ function PostPreview({ post }) {
     )
 }
 
-function PostPreviewHeader({ post }) {
+function PostPreviewHeader({ post,onDeletePost}) {
+    
     return (
         <div className="post-preview-header">
             <div>
                 <img src={post.by.imgUrl} alt="profile" />
                 <strong className="userName-preview">{post.by.fullname}</strong>
             </div>
-            <img src={dotsSvg} alt="" />
+
+            <img title='Delete post' onClick={()=>onDeletePost(post._id)} src={dotsSvg} alt="" />
         </div>
     )
 }

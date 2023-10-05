@@ -19,9 +19,9 @@ export function postReducer(state = initialState, action) {
             newState = { ...state, posts: action.posts }
             break
         case REMOVE_POST:
-            const lastRemovedCar = state.posts.find(car => car._id === action.carId)
-            posts = state.posts.filter(car => car._id !== action.carId)
-            newState = { ...state, posts, lastRemovedCar }
+            const lastRemovedPost = state.posts.find(post => post._id === action.postId)
+            posts = state.posts.filter(post => post._id !== action.postId)
+            newState = { ...state, posts, lastRemovedPost }
             break
         case ADD_POST:
             newState = { ...state, posts: [...state.posts, action.car] }
