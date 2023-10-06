@@ -40,7 +40,6 @@ function PostPreviewHeader({ post,onDeletePost}) {
     )
 }
 function PostImage({ img }) {
-    console.log(img)
     return (
         <div className="post-img-container">
             <img className="post-img" src={img} alt="profile" />

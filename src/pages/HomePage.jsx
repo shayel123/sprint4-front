@@ -33,11 +33,13 @@ export function HomePage() {
     }
     async function onAddPost(txt, file) {
         try {
-            setPostToEdit(state => ({ ...state, txt, imgUrl: file }))
+        const newPost = postService.getEmptyPost()
+        newPost.txt=txt
+        newPost.imgUrl=file
+            addPost(newPost)
         } catch (error) {
             console.log(error)
         } finally {
-            addPost(postToEdit)
             setOpenCreate(state => !state)
         }
     }
