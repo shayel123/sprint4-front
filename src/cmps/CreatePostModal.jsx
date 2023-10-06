@@ -36,17 +36,22 @@ export function CreatePostModal({ onCloseModal, onAddPost }) {
                     <h4>Create new post</h4>
                     <hr />
                 </div>
-                <div class="loader-line"></div>
+                <div className="loader-line"></div>
             </section>
         )
     }
     else if (selectedFile) {
         return (
             <section className="modal-img">
-                <div >
+                {/* <div >
                     <button onClick={() => setSelectedFile(null)} >another</button>
                     <button onClick={() => onAddPost(postTitle, selectedFile)}>Share</button>
 
+                </div> */}
+                <div className="modal-header-share" >
+                    <button className="btn-back" onClick={() => setSelectedFile(null)} ><img src={backSvg} alt="back" /></button>
+                    <p><strong>Create new post</strong></p>
+                    <button className="btn-share" onClick={() => onAddPost(postTitle, selectedFile)}>Share</button>
                 </div>
                 <div style={{ display: 'flex' }}>
 
