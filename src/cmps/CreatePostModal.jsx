@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import createSvg from '/src/assets/icons/create.svg'
+import React, { useRef, useState } from "react";
+import createModalSvg from '/src/assets/icons/create-modal.svg'
+import backSvg from '/src/assets/icons/back.svg'
 import { uploadService } from "../services/upload.service";
 import { systemReducer, LOADING_DONE, LOADING_START } from "../store/system.reducer";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,8 +31,13 @@ export function CreatePostModal({ onCloseModal, onAddPost }) {
 
     if (isLoading) {
         return (
-            <Loader />
-
+            <section className="modal">
+                <div className="modal-header">
+                    <h4>Create new post</h4>
+                    <hr />
+                </div>
+                <div class="loader-line"></div>
+            </section>
         )
     }
     else if (selectedFile) {
@@ -67,24 +73,16 @@ export function CreatePostModal({ onCloseModal, onAddPost }) {
         <section className="modal">
             <div className="modal-header">
                 <h4>Create new post</h4>
+                <hr />
             </div>
             <div className="add-files">
-                <img style={{ width: '33%', margin: '5px auto' }} src={createSvg} alt="" />
-                <input onChange={handleAddPhoto} type="file" />
+                <img style={{ width: '150px', margin: '5px auto' }} src={createModalSvg} alt="" />
+                <label htmlFor="btn-upload" className="label-upload">Select from computer</label>
+                <input id="btn-upload" className="btn-upload" onChange={handleAddPhoto} type="file" />
                 <button onClick={onCloseModal} className="close-modal">X</button>
             </div>
         </section>
     )
 }
 
-function Loader() {
-    return (
-        <section className="modal">
-            <div >
-                <h2>Uploading photo...</h2>
-            </div>
-
-        </section>
-    )
-}
 
