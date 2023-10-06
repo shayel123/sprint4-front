@@ -75,9 +75,9 @@ function getEmptyPost() {
     txt: '',
     imgUrl: '',
     by: null,
-    comments: null,
-    likedBy: null,
-    tags: null
+    comments:[],
+    likedBy: [],
+    tags:[]
 
   }
 }
