@@ -6,16 +6,18 @@ import React, { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { CreatePostModal } from "../cmps/CreatePostModal"
 import { addPost, loadPosts, removePost } from "../store/post.actions"
+import { loadUsers } from "../store/user.actions"
 import { utilService } from "../services/util.service"
 import { postService } from "../services/post.service.local"
 
 
 export function HomePage() {
     const posts = useSelector(storeState => storeState.postModule.posts)
+    const users = useSelector(storeState => storeState.userModule.users)
     useEffect(() => {
         loadPosts()
+        loadUsers()
     }, [])
-    const [postToEdit, setPostToEdit] = useState(postService.getEmptyPost())
     const [openCreate, setOpenCreate] = useState(false)
     function ToggleModal(ev) {
         ev.preventDefault()
@@ -54,7 +56,7 @@ export function HomePage() {
                     <PostList onDeletePost={onDeletePost} posts={posts} />
                 </main>
                 <section className="suggest-followers">
-                    <SuggestFollowers />
+                    <SuggestFollowers users={users} />
                 </section>
             </div>
         </>
